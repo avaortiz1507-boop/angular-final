@@ -20,16 +20,25 @@ describe('ObjectsService', () => {
     httpMock.verify();
   });
 
-  it('should use PATCH for object updates to match the API contract', () => {
+  it('should fall back to creating a new object when the API rejects an update for a reserved id', () => {
     const payload = {
       name: 'Updated item',
       data: { color: 'green', price: 99 },
     };
 
-    service.update('123', payload).subscribe();
+    service.update('1', payload).subscribe((item) => {
+      expect(item.name).toBe('Updated item');
+    });
 
-    const req = httpMock.expectOne('https://api.restful-api.dev/objects/123');
-    expect(req.request.method).toBe('PATCH');
-    req.flush(payload);
+    const updateReq = httpMock.expectOne('https://api.restful-api.dev/objects/1');
+    expect(updateReq.request.method).toBe('PATCH');
+    updateReq.flush(
+      { error: '1 is a reserved id and the data object of it cannot be overridden.' },
+      { status: 405, statusText: 'Method Not Allowed' },
+    );
+
+    const createReq = httpMock.expectOne('https://api.restful-api.dev/objects');
+    expect(createReq.request.method).toBe('POST');
+    createReq.flush({ id: 'new-123', name: 'Updated item', data: { color: 'green', price: 99 } });
   });
 });

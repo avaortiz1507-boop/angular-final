@@ -74,7 +74,11 @@ export class ObjectsService {
         this.upsertLocalItem(updatedItem);
         return updatedItem;
       }),
-      catchError(() => {
+      catchError((error: unknown) => {
+        if (this.shouldCreateNewObject(error)) {
+          return this.createViaApi(item);
+        }
+
         const fallbackItem = this.applyLocalUpdate(id, item);
         return of(fallbackItem);
       }),
@@ -87,7 +91,11 @@ export class ObjectsService {
         this.upsertLocalItem(updatedItem);
         return updatedItem;
       }),
-      catchError(() => {
+      catchError((error: unknown) => {
+        if (this.shouldCreateNewObject(error)) {
+          return this.createViaApi(partialItem as InventoryPayload);
+        }
+
         const fallbackItem = this.applyLocalUpdate(id, partialItem);
         return of(fallbackItem);
       }),
@@ -121,6 +129,33 @@ export class ObjectsService {
     }
 
     return 'Something went wrong while contacting the inventory API.';
+  }
+
+  private createViaApi(item: InventoryPayload): Observable<InventoryItem> {
+    return this.http.post<InventoryItem>(this.baseUrl, item, { headers: this.getHeaders() }).pipe(
+      map((createdItem) => {
+        this.upsertLocalItem(createdItem);
+        return createdItem;
+      }),
+      catchError(() => {
+        const fallbackItem = this.createLocalItem(item);
+        this.upsertLocalItem(fallbackItem);
+        return of(fallbackItem);
+      }),
+    );
+  }
+
+  private shouldCreateNewObject(error: unknown): boolean {
+    if (!(error instanceof HttpErrorResponse)) {
+      return false;
+    }
+
+    if (error.status !== 405) {
+      return false;
+    }
+
+    const responseText = typeof error.error === 'string' ? error.error : JSON.stringify(error.error ?? {});
+    return /reserved id|cannot be overridden/i.test(responseText);
   }
 
   private readStoredItems(): InventoryItem[] {
