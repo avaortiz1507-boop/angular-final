@@ -14,15 +14,15 @@ import { ObjectsService } from '../../services/objects.service';
     <section class="mx-auto max-w-3xl space-y-6">
       <div class="flex items-center justify-between gap-4">
         <div>
-          <p class="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">{{ isEditing() ? 'Update' : 'Create' }}</p>
+          <p class="text-sm font-medium uppercase tracking-[0.2em] text-pink-700">{{ isEditing() ? 'Update' : 'Create' }}</p>
           <h1 class="mt-1 text-3xl font-bold text-slate-900">{{ isEditing() ? 'Edit inventory item' : 'Create new item' }}</h1>
         </div>
-        <a routerLink="/objects" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+        <a routerLink="/objects" class="rounded-xl border border-pink-200 bg-white px-3 py-2 text-sm font-semibold text-pink-700 hover:bg-pink-50">
           Back to list
         </a>
       </div>
 
-      <div *ngIf="loading()" class="rounded-2xl border border-slate-200 bg-white p-6 text-slate-600">
+      <div *ngIf="loading()" class="rounded-2xl border border-blue-200 bg-blue-50/80 p-6 text-slate-600">
         Saving item…
       </div>
 
@@ -30,14 +30,14 @@ import { ObjectsService } from '../../services/objects.service';
         {{ errorMessage() }}
       </div>
 
-      <form *ngIf="!loading()" [formGroup]="form" (ngSubmit)="submitForm()" class="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <form *ngIf="!loading()" [formGroup]="form" (ngSubmit)="submitForm()" class="space-y-6 rounded-2xl border border-pink-200 bg-white/90 p-6 shadow-sm shadow-pink-100/40">
         <div>
           <label for="name" class="mb-2 block text-sm font-semibold text-slate-700">Name</label>
           <input
             id="name"
             type="text"
             formControlName="name"
-            class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            class="w-full rounded-xl border border-pink-200 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
             placeholder="e.g. Smart Speaker"
           />
           <div *ngIf="nameControl.invalid && (nameControl.dirty || nameControl.touched)" class="mt-2 text-sm text-red-600">
@@ -49,7 +49,7 @@ import { ObjectsService } from '../../services/objects.service';
         <div class="grid gap-5 md:grid-cols-2">
           <div>
             <label for="color" class="mb-2 block text-sm font-semibold text-slate-700">Color</label>
-            <input id="color" type="text" formControlName="color" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" placeholder="Blue" />
+            <input id="color" type="text" formControlName="color" class="w-full rounded-xl border border-blue-200 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100" placeholder="Blue" />
             <div *ngIf="colorControl.invalid && (colorControl.dirty || colorControl.touched)" class="mt-2 text-sm text-red-600">
               <span *ngIf="colorControl.errors?.['required']">Color is required.</span>
               <span *ngIf="colorControl.errors?.['minlength']">Color should be at least 2 characters.</span>
@@ -58,7 +58,7 @@ import { ObjectsService } from '../../services/objects.service';
 
           <div>
             <label for="price" class="mb-2 block text-sm font-semibold text-slate-700">Price</label>
-            <input id="price" type="number" min="0" formControlName="price" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" placeholder="299.99" />
+            <input id="price" type="number" min="0" formControlName="price" class="w-full rounded-xl border border-yellow-200 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100" placeholder="299.99" />
             <div *ngIf="priceControl.invalid && (priceControl.dirty || priceControl.touched)" class="mt-2 text-sm text-red-600">
               <span *ngIf="priceControl.errors?.['required']">Price is required.</span>
               <span *ngIf="priceControl.errors?.['min']">Price cannot be negative.</span>
@@ -69,20 +69,20 @@ import { ObjectsService } from '../../services/objects.service';
         <div class="grid gap-5 md:grid-cols-2">
           <div>
             <label for="category" class="mb-2 block text-sm font-semibold text-slate-700">Category</label>
-            <input id="category" type="text" formControlName="category" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" placeholder="Electronics" />
+            <input id="category" type="text" formControlName="category" class="w-full rounded-xl border border-emerald-200 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="Electronics" />
           </div>
 
           <div>
             <label for="year" class="mb-2 block text-sm font-semibold text-slate-700">Year</label>
-            <input id="year" type="number" min="1900" formControlName="year" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100" placeholder="2024" />
+            <input id="year" type="number" min="1900" formControlName="year" class="w-full rounded-xl border border-blue-200 bg-white px-3 py-2.5 text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100" placeholder="2024" />
           </div>
         </div>
 
         <div class="flex flex-wrap items-center justify-end gap-3">
-          <button type="button" routerLink="/objects" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+          <button type="button" routerLink="/objects" class="rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-pink-700 hover:bg-pink-50">
             Cancel
           </button>
-          <button type="submit" [disabled]="form.invalid || loading()" class="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:bg-indigo-300">
+          <button type="submit" [disabled]="form.invalid || loading()" class="rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-emerald-200">
             {{ isEditing() ? 'Save changes' : 'Create item' }}
           </button>
         </div>

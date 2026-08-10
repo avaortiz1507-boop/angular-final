@@ -13,15 +13,15 @@ import { ObjectsService } from '../../services/objects.service';
     <section class="space-y-6">
       <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <p class="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Catalog</p>
+          <p class="text-sm font-medium uppercase tracking-[0.2em] text-pink-700">Catalog</p>
           <h1 class="mt-1 text-3xl font-bold text-slate-900">Inventory list</h1>
         </div>
-        <a routerLink="/objects/new" class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500">
+        <a routerLink="/objects/new" class="inline-flex items-center justify-center rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-500">
           Add object
         </a>
       </div>
 
-      <div *ngIf="loading()" class="rounded-2xl border border-slate-200 bg-white p-6 text-slate-600">
+      <div *ngIf="loading()" class="rounded-2xl border border-pink-200 bg-white/80 p-6 text-slate-600">
         Loading inventory…
       </div>
 
@@ -29,14 +29,14 @@ import { ObjectsService } from '../../services/objects.service';
         {{ errorMessage() }}
       </div>
 
-      <div *ngIf="!loading() && !items().length" class="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
+      <div *ngIf="!loading() && !items().length" class="rounded-2xl border border-dashed border-pink-200 bg-white/80 p-8 text-center text-slate-500">
         No inventory items available yet.
       </div>
 
-      <div *ngIf="items().length" class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div *ngIf="items().length" class="overflow-hidden rounded-2xl border border-pink-200 bg-white/90 shadow-sm shadow-pink-100/40">
         <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-slate-200 text-left">
-            <thead class="bg-slate-50 text-sm font-semibold uppercase tracking-wide text-slate-600">
+          <table class="min-w-full divide-y divide-pink-100 text-left">
+            <thead class="bg-pink-50 text-sm font-semibold uppercase tracking-wide text-pink-700">
               <tr>
                 <th class="px-4 py-3">Name</th>
                 <th class="px-4 py-3">Color</th>
@@ -45,7 +45,7 @@ import { ObjectsService } from '../../services/objects.service';
                 <th class="px-4 py-3 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-200 text-sm text-slate-700">
+            <tbody class="divide-y divide-pink-100 text-sm text-slate-700">
               <tr *ngFor="let item of items()">
                 <td class="px-4 py-3 font-semibold text-slate-900">{{ item.name }}</td>
                 <td class="px-4 py-3">{{ item.data?.color || '—' }}</td>
@@ -53,10 +53,10 @@ import { ObjectsService } from '../../services/objects.service';
                 <td class="px-4 py-3">{{ item.data?.category || 'General' }}</td>
                 <td class="px-4 py-3">
                   <div class="flex justify-end gap-2">
-                    <a [routerLink]="['/objects', item.id]" class="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-slate-300 hover:bg-slate-50">
+                    <a [routerLink]="['/objects', item.id]" class="rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-100">
                       View
                     </a>
-                    <a [routerLink]="['/objects', item.id, 'edit']" class="rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-700 hover:bg-indigo-100">
+                    <a [routerLink]="['/objects', item.id, 'edit']" class="rounded-lg border border-yellow-200 bg-yellow-50 px-3 py-1.5 text-xs font-semibold text-yellow-700 hover:bg-yellow-100">
                       Edit
                     </a>
                     <button type="button" (click)="deleteItem(item.id)" class="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-100">

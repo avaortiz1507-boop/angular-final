@@ -13,20 +13,20 @@ import { ObjectsService } from '../../services/objects.service';
     <section class="space-y-6">
       <div class="flex items-center justify-between gap-3">
         <div>
-          <p class="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Details</p>
+          <p class="text-sm font-medium uppercase tracking-[0.2em] text-pink-700">Details</p>
           <h1 class="mt-1 text-3xl font-bold text-slate-900">{{ item()?.name || 'Inventory item' }}</h1>
         </div>
         <div class="flex gap-2">
-          <a [routerLink]="['/objects', itemId(), 'edit']" class="rounded-xl border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm font-semibold text-indigo-700 hover:bg-indigo-100">
+          <a [routerLink]="['/objects', itemId(), 'edit']" class="rounded-xl border border-yellow-200 bg-yellow-50 px-3 py-2 text-sm font-semibold text-yellow-700 hover:bg-yellow-100">
             Edit
           </a>
-          <a routerLink="/objects" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+          <a routerLink="/objects" class="rounded-xl border border-pink-200 bg-white px-3 py-2 text-sm font-semibold text-pink-700 hover:bg-pink-50">
             Back to list
           </a>
         </div>
       </div>
 
-      <div *ngIf="loading()" class="rounded-2xl border border-slate-200 bg-white p-8 text-slate-500">
+      <div *ngIf="loading()" class="rounded-2xl border border-blue-200 bg-blue-50/80 p-8 text-slate-600">
         Loading item details…
       </div>
 
@@ -34,7 +34,7 @@ import { ObjectsService } from '../../services/objects.service';
         {{ errorMessage() }}
       </div>
 
-      <article *ngIf="item() as currentItem" class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <article *ngIf="item() as currentItem" class="rounded-2xl border border-pink-200 bg-white/90 p-6 shadow-sm shadow-pink-100/40">
         <dl class="grid gap-5 md:grid-cols-2">
           <div>
             <dt class="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">ID</dt>

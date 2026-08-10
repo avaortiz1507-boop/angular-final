@@ -1,3 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+:root {
+  --pastel-pink: #fce7f3;
+  --pastel-blue: #dbeafe;
+  --pastel-yellow: #fef3c7;
+  --pastel-green: #dcfce7;
+  --pastel-ink: #3f3a4f;
+}
+
+html {
+  background: linear-gradient(135deg, #fff7fb 0%, #eef6ff 45%, #fef9c3 100%);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff7fb 0%, #eef6ff 45%, #fef9c3 100%);
+  color: var(--pastel-ink);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+a {
+  transition: all 0.2s ease;
+}
