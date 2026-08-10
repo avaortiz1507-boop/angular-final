@@ -1,59 +1,70 @@
-# AngularFinal
+# Inventory Manager
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.17.
+A small Angular + Tailwind inventory application that connects to the public RESTful API at https://api.restful-api.dev/objects.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- Dashboard overview with quick stats
+- Inventory list with view, edit, and delete actions
+- Single item detail page
+- Create and edit forms with validation
+- Login/account mock page and 404 route
+- Full CRUD using Angular HttpClient and the public API
+
+## Project setup
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start the Angular development server:
+
+   ```bash
+   npm start
+   ```
+
+3. Open the app in your browser at:
+
+   ```text
+   http://localhost:4200/
+   ```
+
+## Available routes
+
+- `/` — Home dashboard
+- `/objects` — Inventory list
+- `/objects/new` — Create item form
+- `/objects/:id` — Item details
+- `/objects/:id/edit` — Edit item form
+- `/login` — Account/login mock area
+- `*` — Not found route
+
+## API usage
+
+This app uses the public object API:
+
+- GET https://api.restful-api.dev/objects
+- GET https://api.restful-api.dev/objects/{id}
+- POST https://api.restful-api.dev/objects
+- PUT https://api.restful-api.dev/objects/{id}
+- PATCH https://api.restful-api.dev/objects/{id}
+- DELETE https://api.restful-api.dev/objects/{id}
+
+## Validation notes
+
+The create/edit form validates:
+
+- Name is required and must be at least 3 characters
+- Color is required and must be at least 2 characters
+- Price is required and cannot be negative
+- Submit button stays disabled until the form is valid
+
+## Build
+
+To verify the project compiles:
 
 ```bash
-ng serve
+npm run build
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
