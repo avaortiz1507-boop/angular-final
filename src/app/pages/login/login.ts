@@ -3,6 +3,8 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { UserService } from '../../services/user.service';
+
 @Component({
   selector: 'app-login-page',
   standalone: true,
@@ -36,17 +38,24 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent {
   private readonly router = inject(Router);
+  private readonly userService = inject(UserService);
   email = '';
   password = '';
   errorMessage = signal('');
 
-  login(): void {
+  async login(): Promise<void> {
     if (!this.email || !this.password) {
       this.errorMessage.set('Email and password are required.');
       return;
     }
 
     this.errorMessage.set('');
+    const user = await this.userService.authenticate(this.email, this.password);
+    if (!user) {
+      this.errorMessage.set('Invalid email or password.');
+      return;
+    }
+
     this.router.navigate(['/']);
   }
 }
