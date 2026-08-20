@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -38,7 +38,7 @@ import { UserService } from '../../services/user.service';
 })
 export class LoginPageComponent {
   private readonly router = inject(Router);
-  private readonly userService = inject(UserService);
+  private readonly authService = inject(AuthService);
   email = '';
   password = '';
   errorMessage = signal('');
@@ -50,8 +50,8 @@ export class LoginPageComponent {
     }
 
     this.errorMessage.set('');
-    const user = await this.userService.authenticate(this.email, this.password);
-    if (!user) {
+    const loggedIn = await this.authService.login(this.email, this.password);
+    if (!loggedIn) {
       this.errorMessage.set('Invalid email or password.');
       return;
     }

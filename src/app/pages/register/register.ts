@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register-page',
@@ -38,7 +38,7 @@ import { UserService } from '../../services/user.service';
 })
 export class RegisterPageComponent {
   private readonly router = inject(Router);
-  private readonly userService = inject(UserService);
+  private readonly authService = inject(AuthService);
   email = '';
   password = '';
   errorMessage = signal('');
@@ -50,7 +50,7 @@ export class RegisterPageComponent {
     }
 
     this.errorMessage.set('');
-    const result = await this.userService.addUser(this.email, this.password);
+  const result = await this.authService.register(this.email, this.password);
     if (!result.success) {
       this.errorMessage.set(result.message ?? 'Unable to create the account.');
       return;
