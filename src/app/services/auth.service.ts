@@ -25,7 +25,14 @@ export class AuthService {
       return false;
     }
 
-    window.localStorage.setItem(this.tokenKey, username);
+    const token = JSON.stringify({
+      id: user.username,
+      email: user.username,
+      role: user.role,
+      exp: Date.now() + 3600000,
+    });
+
+    window.localStorage.setItem(this.tokenKey, token);
     window.localStorage.setItem(this.roleKey, user.role);
     return true;
   }
