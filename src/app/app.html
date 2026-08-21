@@ -12,12 +12,61 @@
   </main>
 
   <nav class="border-t border-pink-200 bg-white/85 backdrop-blur-sm shadow-[0_-10px_30px_rgba(236,72,153,0.08)]">
-    <div class="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-3 md:gap-3 md:px-6">
-      <a routerLink="/" routerLinkActive="bg-pink-500 text-white shadow-sm" [routerLinkActiveOptions]="{ exact: true }" class="rounded-full px-3 py-2 text-sm font-medium text-pink-700 transition hover:bg-pink-100 md:text-base">Home</a>
-      <a routerLink="/objects" routerLinkActive="bg-blue-500 text-white shadow-sm" class="rounded-full px-3 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-100 md:text-base">List</a>
-      <a routerLink="/objects/new" routerLinkActive="bg-emerald-500 text-white shadow-sm" class="rounded-full px-3 py-2 text-sm font-medium text-emerald-700 transition hover:bg-emerald-100 md:text-base">Create</a>
-      <a routerLink="/login" routerLinkActive="bg-yellow-400 text-slate-800 shadow-sm" class="rounded-full px-3 py-2 text-sm font-medium text-yellow-700 transition hover:bg-yellow-100 md:text-base">Login</a>
-      <a routerLink="/register" routerLinkActive="bg-pink-500 text-white shadow-sm" class="rounded-full px-3 py-2 text-sm font-medium text-pink-700 transition hover:bg-pink-100 md:text-base">Register</a>
-    </div>
-  </nav>
-</div>
+  <div class="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-3 md:gap-3 md:px-6">
+
+    <a 
+      routerLink="/" 
+      routerLinkActive="bg-pink-500 text-white shadow-sm" 
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="rounded-full px-3 py-2 text-sm font-medium text-pink-700 transition hover:bg-pink-100 md:text-base">
+      Home
+    </a>
+
+    @if (auth.isLoggedIn()) {
+      <a 
+        routerLink="/objects" 
+        routerLinkActive="bg-blue-500 text-white shadow-sm"
+        class="rounded-full px-3 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-100 md:text-base">
+        List
+      </a>
+    }
+
+    @if (auth.isAdmin()) {
+      <a 
+        routerLink="/objects/new" 
+        routerLinkActive="bg-emerald-500 text-white shadow-sm"
+        class="rounded-full px-3 py-2 text-sm font-medium text-emerald-700 transition hover:bg-emerald-100 md:text-base">
+        Create
+      </a>
+    }
+
+    @if (auth.isAdmin()) {
+      <a 
+        routerLink="/admin" 
+        routerLinkActive="bg-indigo-500 text-white shadow-sm"
+        class="rounded-full px-3 py-2 text-sm font-medium text-indigo-700 transition hover:bg-indigo-100 md:text-base">
+        Admin Panel
+      </a>
+    }
+
+    @if (!auth.isLoggedIn()) {
+      <a 
+        routerLink="/login" 
+        routerLinkActive="bg-yellow-400 text-slate-800 shadow-sm"
+        class="rounded-full px-3 py-2 text-sm font-medium text-yellow-700 transition hover:bg-yellow-100 md:text-base">
+        Login
+      </a>
+    }
+
+    @if (!auth.isLoggedIn()) {
+      <a 
+        routerLink="/register" 
+        routerLinkActive="bg-pink-500 text-white shadow-sm"
+        class="rounded-full px-3 py-2 text-sm font-medium text-pink-700 transition hover:bg-pink-100 md:text-base">
+        Register
+      </a>
+    }
+
+  </div>
+</nav>
+

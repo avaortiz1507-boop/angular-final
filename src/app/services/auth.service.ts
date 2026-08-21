@@ -66,4 +66,12 @@ export class AuthService {
     const role = window.localStorage.getItem(this.roleKey);
     return role === 'user' || role === 'admin' ? role : null;
   }
+
+  isAdmin(): boolean {
+    return this.getRole() === 'admin';
+  }
+
+  isUser(): boolean {
+    return this.getRole() === 'user';
+  }
 }
