@@ -3,6 +3,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { InventoryItem } from '../../models/inventory';
+import { AuthService } from '../../services/auth.service';
 import { ObjectsService } from '../../services/objects.service';
 
 @Component({
@@ -21,11 +22,27 @@ import { ObjectsService } from '../../services/objects.service';
           <a routerLink="/objects" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pink-700 transition hover:bg-pink-50">
             View catalog
           </a>
-          <a routerLink="/objects/new" class="rounded-full border border-white/80 bg-emerald-100 px-5 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-200">
-            Add item
-          </a>
+          @if (auth.isAdmin()) {
+            <a routerLink="/objects/new" class="rounded-full border border-white/80 bg-emerald-100 px-5 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-200">
+              Add New Object
+            </a>
+          }
         </div>
       </div>
+
+      @if (auth.isAdmin()) {
+        <section class="rounded-2xl border border-indigo-200 bg-indigo-50/60 p-6 shadow-sm shadow-indigo-100/40">
+          <p class="text-sm font-medium uppercase tracking-[0.2em] text-indigo-700">Admin dashboard</p>
+          <h2 class="mt-1 text-2xl font-bold text-slate-900">Admin controls</h2>
+          <p class="mt-3 text-slate-600">You have administrator access to manage inventory and users.</p>
+        </section>
+      } @else {
+        <section class="rounded-2xl border border-blue-200 bg-blue-50/60 p-6 shadow-sm shadow-blue-100/40">
+          <p class="text-sm font-medium uppercase tracking-[0.2em] text-blue-700">User dashboard</p>
+          <h2 class="mt-1 text-2xl font-bold text-slate-900">Welcome back</h2>
+          <p class="mt-3 text-slate-600">Browse inventory items and review the latest catalog updates.</p>
+        </section>
+      }
 
       <section class="rounded-2xl border border-pink-200 bg-white/90 p-6 shadow-sm shadow-pink-100/40">
         <div class="flex items-center justify-between gap-4">
@@ -60,6 +77,7 @@ import { ObjectsService } from '../../services/objects.service';
 })
 export class HomePageComponent implements OnInit {
   private readonly objectsService = inject(ObjectsService);
+  readonly auth = inject(AuthService);
 
   loading = signal(false);
   errorMessage = signal('');

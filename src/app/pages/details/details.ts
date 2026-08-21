@@ -3,6 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { InventoryItem } from '../../models/inventory';
+import { AuthService } from '../../services/auth.service';
 import { ObjectsService } from '../../services/objects.service';
 
 @Component({
@@ -17,9 +18,11 @@ import { ObjectsService } from '../../services/objects.service';
           <h1 class="mt-1 text-3xl font-bold text-slate-900">{{ item()?.name || 'Inventory item' }}</h1>
         </div>
         <div class="flex gap-2">
-          <a [routerLink]="['/objects', itemId(), 'edit']" class="rounded-xl border border-yellow-200 bg-yellow-50 px-3 py-2 text-sm font-semibold text-yellow-700 hover:bg-yellow-100">
-            Edit
-          </a>
+          @if (auth.isAdmin()) {
+            <a [routerLink]="['/objects', itemId(), 'edit']" class="rounded-xl border border-yellow-200 bg-yellow-50 px-3 py-2 text-sm font-semibold text-yellow-700 hover:bg-yellow-100">
+              Edit
+            </a>
+          }
           <a routerLink="/objects" class="rounded-xl border border-pink-200 bg-white px-3 py-2 text-sm font-semibold text-pink-700 hover:bg-pink-50">
             Back to list
           </a>
@@ -73,6 +76,7 @@ import { ObjectsService } from '../../services/objects.service';
 export class ObjectDetailsPageComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly objectsService = inject(ObjectsService);
+  readonly auth = inject(AuthService);
 
   itemId = signal('');
   item = signal<InventoryItem | null>(null);

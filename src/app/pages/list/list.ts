@@ -3,6 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { InventoryItem } from '../../models/inventory';
+import { AuthService } from '../../services/auth.service';
 import { ObjectsService } from '../../services/objects.service';
 
 @Component({
@@ -16,9 +17,11 @@ import { ObjectsService } from '../../services/objects.service';
           <p class="text-sm font-medium uppercase tracking-[0.2em] text-pink-700">Catalog</p>
           <h1 class="mt-1 text-3xl font-bold text-slate-900">Inventory list</h1>
         </div>
-        <a routerLink="/objects/new" class="inline-flex items-center justify-center rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-500">
-          Add object
-        </a>
+        @if (auth.isAdmin()) {
+          <a routerLink="/objects/new" class="inline-flex items-center justify-center rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-500">
+            Add object
+          </a>
+        }
       </div>
 
       <div *ngIf="loading()" class="rounded-2xl border border-pink-200 bg-white/80 p-6 text-slate-600">
@@ -56,10 +59,12 @@ import { ObjectsService } from '../../services/objects.service';
                     <a [routerLink]="['/objects', item.id]" class="rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-100">
                       View
                     </a>
-                    <a [routerLink]="['/objects', item.id, 'edit']" class="rounded-lg border border-yellow-200 bg-yellow-50 px-3 py-1.5 text-xs font-semibold text-yellow-700 hover:bg-yellow-100">
-                      Edit
-                    </a>
-                    <button type="button" (click)="deleteItem(item.id)" class="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-100">
+                    @if (auth.isAdmin()) {
+                      <a [routerLink]="['/objects', item.id, 'edit']" class="rounded-lg border border-yellow-200 bg-yellow-50 px-3 py-1.5 text-xs font-semibold text-yellow-700 hover:bg-yellow-100">
+                        Edit
+                      </a>
+                    }
+                    <button type="button" [disabled]="!auth.isAdmin()" (click)="deleteItem(item.id)" class="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 enabled:hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50">
                       Delete
                     </button>
                   </div>
@@ -74,6 +79,7 @@ import { ObjectsService } from '../../services/objects.service';
 })
 export class ObjectsListPageComponent implements OnInit {
   private readonly objectsService = inject(ObjectsService);
+  readonly auth = inject(AuthService);
 
   loading = signal(false);
   errorMessage = signal('');
@@ -108,6 +114,10 @@ export class ObjectsListPageComponent implements OnInit {
   }
 
   deleteItem(id: string): void {
+    if (!this.auth.isAdmin()) {
+      return;
+    }
+
     if (!confirm('Delete this item? This action cannot be undone.')) {
       return;
     }
