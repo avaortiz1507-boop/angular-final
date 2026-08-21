@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UserService } from './user.service';
 
@@ -14,6 +15,8 @@ export class AuthService {
   private readonly userService = inject(UserService);
   private readonly tokenKey = 'auth_token';
   private readonly roleKey = 'auth_role';
+
+  constructor(private router: Router) {}
 
   async register(username: string, password: string): Promise<AuthResult> {
     return this.userService.addUser(username, password);
@@ -44,6 +47,7 @@ export class AuthService {
 
     window.localStorage.removeItem(this.tokenKey);
     window.localStorage.removeItem(this.roleKey);
+    void this.router.navigate(['/login']);
   }
 
   getToken(): string | null {
